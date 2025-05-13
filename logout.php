@@ -1,0 +1,27 @@
+<?php include_once __DIR__ . "/includes/head/head-min.php";?>
+<body>
+  <div id="colorlib-page">
+    <aside id="colorlib-aside" role="complementary" class="js-fullheight">
+      <nav id="colorlib-main-menu" role="navigation">
+    	    <?php include_once __DIR__ . '/init.php'; 
+        	echo $init->htmlMenu($menuArray); ?> 
+      </nav>
+    </aside> 
+    <div id="colorlib-main">
+      <section class="ftco-about img ftco-section ftco-no-pt ftco-no-pb" id="about-section">
+        <div class="container-fluid px-0">
+          <div class="row d-flex mt-5">
+            <div class="col-md-6 d-flex align-items-center">
+              <div class="text px-4 pt-5 pt-md-0 px-md-4 pr-md-5 ftco-animate">
+                <h2 class="mb-4">да это я <span>Шаммиль</span> a Scotish Blogger &amp; Explorer</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div><!-- END COLORLIB-MAIN -->
+  </div><!-- END COLORLIB-PAGE -->
+  <?php include_once __DIR__ . '/includes/pre-loader.php';?>
+  <?php include_once __DIR__ . '/includes/script/inc/base.inc.php';?>
+</body>
+</html>
