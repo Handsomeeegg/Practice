@@ -1,10 +1,11 @@
-<?php include_once __DIR__ . "/includes/head/head-min.php";?>
+<?php include_once __DIR__ . "/includes/head/head-min.php"?>;
+
 <body>
   <div id="colorlib-page">
     <aside id="colorlib-aside" role="complementary" class="js-fullheight">
       <nav id="colorlib-main-menu" role="navigation">
         <?php include_once __DIR__ . '/init.php'; 
-        echo $init->htmlMenu($menuArray); ?> 
+        echo $initMenu->htmlMenu($menuArray); ?> 
       </nav>
     </aside> 
     <div id="colorlib-main">

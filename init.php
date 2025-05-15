@@ -1,5 +1,6 @@
 <?php 
 include_once __DIR__ . "/autoloader.php";
-include_once __DIR__ . "/config.php";
+include_once __DIR__ . "/config/configMenu.php";
 
-$init = new Menu($menuArray);
+$initMenu = new Menu($menuArray);
+$initRequest = new Request();
