@@ -4,7 +4,7 @@
 	<div id="colorlib-page">
     	<aside id="colorlib-aside" role="complementary" class="js-fullheight">
       		<nav id="colorlib-main-menu" role="navigation">
-        		<?php include_once __DIR__ . '/init.php'; 
+        		<?php include_once __DIR__ . '/init/init.php'; 
         		echo $initMenu->htmlMenu($menuArray); ?> 
       		</nav>
     	</aside> 
@@ -18,17 +18,30 @@
 					</div>
 					<div class="row block-9">
 						<div class="col-lg-6 d-flex">
-							<form action="#" class="bg-light p-5 contact-form">
+							<form action="login.php" method="post" class="bg-light p-5 contact-form">
 								<div class="form-group">
-									<input type="text" class="form-control is-invalid" placeholder="Your Login"
-										name="login">
+									<input type="login"
+										class="form-control <?= !empty($user->login_error) ? 'is-invalid' : '' ?>"
+										placeholder="Your Login" name="login"
+										value="<?= $user->login ?? '' ?>">
+									<?php if (!empty($user->login_error)): ?>
+										<div class="invalid-feedback">
+											<?= $user->login_error ?>
+										</div>
+									<?php endif; ?>
 								</div>
+
+
 								<div class="form-group">
-									<input type="password" class="form-control is-invalid" placeholder="Password"
+									<input type="password"
+										class="form-control <?= !empty($user->password_error) ? 'is-invalid' : '' ?>"
+										placeholder="Пароль"
 										name="password">
-									<div class="invalid-feedback">
-										password error
-									</div>
+									<?php if (!empty($user->password_error)): ?>
+										<div class="invalid-feedback">
+											<?= $user->password_error ?>
+										</div>
+									<?php endif; ?>
 								</div>
 								<div class="form-group">
 									<input type="submit" value="Вход" class="btn btn-primary py-3 px-5">

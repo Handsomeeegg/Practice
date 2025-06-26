@@ -4,7 +4,7 @@
   <div id="colorlib-page">
     <aside id="colorlib-aside" role="complementary" class="js-fullheight">
       <nav id="colorlib-main-menu" role="navigation">
-        <?php include_once __DIR__ . '/init.php'; 
+        <?php include_once __DIR__ . '/init/init.php'; 
         echo $initMenu->htmlMenu($menuArray); ?> 
       </nav>
     </aside> 

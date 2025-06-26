@@ -3,7 +3,7 @@
 	<div id="colorlib-page">
     	<aside id="colorlib-aside" role="complementary" class="js-fullheight">
       		<nav id="colorlib-main-menu" role="navigation">
-        		<?php include_once __DIR__ . '/init.php'; 
+				<?php include_once __DIR__ . '/init/init.php'; 
         		echo $initMenu->htmlMenu($menuArray); ?> 
       		</nav>
     	</aside> 
@@ -33,59 +33,57 @@
 											</tr>
 										</thead>
 										<tbody>
-											<tr>
-												<th scope="row">1</th>
-												<td>Mark</td>
-												<td>Otto</td>
-												<td>dfg</td>
-												<td>@mdo</td>
-												<td>
-													<a href="temp-block.php" class="btn btn-outline-warning px-4">⏳
-														Block</a>
-												</td>
-												<td>
-													<a href="#" class="btn btn-outline-danger px-4">📌 Block</a>
-												</td>
-											</tr>
-											<tr>
-												<th scope="row">2</th>
-												<td>Mark</td>
-												<td>Otto</td>
-												<td>dfg</td>
-												<td>@mdo</td>
-												<td>
-													<a href="temp-block.php" class="btn btn-outline-warning px-4">⏳
-														Block</a>
-												</td>
-												<td>
-													<a href="#" class="btn btn-outline-danger px-4">📌 Block</a>
-												</td>
-											</tr>
-											<tr>
-												<th scope="row">3</th>
-												<td>Mark</td>
-												<td>Otto</td>
-												<td>dfg</td>
-												<td>@mdo</td>
-												<td>
-													<a href="temp-block.php" class="btn btn-outline-warning px-4">⏳
-														Block</a>
-												</td>
-												<td>
-													<a href="#" class="btn btn-outline-danger px-4">📌 Block</a>
-												</td>
-											</tr>
-
+											<?php if (!empty($users)):
+												$counter = 1; ?>
+												<?php foreach ($users as $userItem): ?>
+													<tr>
+														<th scope="row"><?= $counter++ ?></th>
+														<td><?= $userItem['name'] ?></td>
+														<td><?= $userItem['surname'] ?></td>
+														<td><?= $userItem['login'] ?></td>
+														<td><?= $userItem['email'] ?></td>
+														<td>
+															<?php if (!$userItem['isBlocked']): ?>
+																<a href="temp-block.php?id=<?= $userItem['id'] ?>&token=<?= urlencode($user->token) ?>"
+																	class="btn btn-outline-warning px-4">⏳ Block</a>
+															<?php else: ?>
+																<?php if ($userItem['isPermanentlyBlocked']): ?>
+																	<span class="text-muted">Забанен навсегда</span>
+																<?php else: ?>
+																	<?php if (!empty($userItem['blockDate'])): ?>
+																		<span class="text-muted">Забанен до <?= $userItem['blockDate']?></span>
+																	<?php else: ?>
+																		<span class="text-muted">Забанен (дата не указана)</span>
+																	<?php endif; ?>
+																<?php endif; ?>
+															<?php endif; ?>
+														</td>
+														<td>
+															<?php if (!$userItem['isBlocked']): ?>
+																<form method="POST"
+																	action="perm-block.php?token=<?= urlencode($user->token) ?>"
+																	style="display:inline;">
+																	<input type="hidden" name="id" value="<?= $userItem['id'] ?>">
+																	<button type="submit" class="btn btn-outline-danger px-4">📌
+																		Block</button>
+																</form>
+															<?php endif; ?>
+														</td>
+													</tr>
+												<?php endforeach; ?>
+											<?php else: ?>
+												<tr>
+													<td colspan="7" class="text-center">Пользователи не найдены</td>
+												</tr>
+											<?php endif; ?>
 										</tbody>
 									</table>
 								</div>
 							</div>
 						</div>
-					</div>
-				</div>
 			</section>
-		</div><!-- END COLORLIB-MAIN -->
-	</div><!-- END COLORLIB-PAGE -->
+		</div>
+	</div>
 	<?php include_once __DIR__ . '/includes/pre-loader.php';?>
   <?php include_once __DIR__ . '/includes/script/inc/base.inc.php';?>
 </body>

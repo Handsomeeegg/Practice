@@ -1,12 +1,13 @@
-<?php include_once __DIR__ . '/includes/head/head-3.php';?>
+<?php include_once __DIR__ . '/includes/head/head-3.php'; ?>
+
 <body>
 	<div id="colorlib-page">
-    	<aside id="colorlib-aside" role="complementary" class="js-fullheight">
-      		<nav id="colorlib-main-menu" role="navigation">
-        		<?php include_once __DIR__ . '/init.php'; 
-        		echo $initMenu->htmlMenu($menuArray); ?> 
-      		</nav>
-    	</aside> 
+		<aside id="colorlib-aside" role="complementary" class="js-fullheight">
+			<nav id="colorlib-main-menu" role="navigation">
+				<?php include_once __DIR__ . '/init/init.php'; 
+				echo $initMenu->htmlMenu($menuArray); ?>
+			</nav>
+		</aside>
 		<div id="colorlib-main">
 			<section class="contact-section px-md-2 pt-5">
 				<div class="container">
@@ -18,45 +19,50 @@
 					</div>
 					<div class="row block-9">
 						<div class="col-lg-6 d-flex">
+					
+							<form action="register.php" method="post" class="bg-light p-5 contact-form">
+								<div class="form-group">
+									<input type="text" class="form-control <?= $user->name_error ? "is-invalid" : "" ?>" placeholder="Your Name" name="name" value="<?= $user->name; ?>">
+									<div class="invalid-feedback">
+										<?= $user->name_error; ?>
+									</div>
 
-							<form action="#" class="bg-light p-5 contact-form">
-								<div class="form-group">
-									<input type="text" class="form-control" placeholder="Your Name" name="name">
-
 								</div>
 								<div class="form-group">
-									<input type="text" class="form-control" placeholder="Your Surname" name="surname">
-								</div>
-								<div class="form-group">
-									<input type="text" class="form-control" placeholder="Your Patronymic"
-										name="patronymic">
-								</div>
-								<div class="form-group">
-									<input type="text" class="form-control is-invalid" placeholder="Your Login"
-										name="login">
+									<input type="text" class="form-control <?=$user->surname_error ? "is-invalid" : "" ?>" placeholder="Your Surnameame" name="surname" value="<?= $user->surname; ?>">
 									<div class="invalid-feedback">
-										login error
+										<?= $user->surname_error; ?>
 									</div>
 								</div>
 								<div class="form-group">
-									<input type="email" class="form-control is-invalid" placeholder="Your Email"
-										name="email">
+									<input type="text" class="form-control <?=$user->patronymic_error ? "is-invalid" : "" ?>" placeholder="Your Patronymic" name="patronymic" value="<?= $user->patronymic; ?>">
 									<div class="invalid-feedback">
-										email error
+										<?= $user->patronymic_error; ?>
 									</div>
 								</div>
 								<div class="form-group">
-									<input type="password" class="form-control is-invalid" placeholder="Password"
-										name="password">
+									<input type="text" class="form-control <?=$user->login_error ? "is-invalid" : "" ?>" placeholder="Your Login" name="login" value="<?= $user->login; ?>">
 									<div class="invalid-feedback">
-										password error
+										<?= $user->login_error; ?>
 									</div>
 								</div>
 								<div class="form-group">
-									<input type="password" class="form-control is-invalid" placeholder="Password repeat"
-										name="password_repeat">
+									<input type="email" class="form-control <?= $user->email_error ? "is-invalid" : "" ?>" placeholder="Your Email" name="email" value="<?= $user->email; ?>">
 									<div class="invalid-feedback">
-										password_repeat error
+										<?= $user->email_error; ?>
+									</div>
+								</div>
+								<div class="form-group">
+									<input type="password" class="form-control <?= $user->password_error ? "is-invalid" : "" ?>" placeholder="Password" name="password" value="<?= $user->password; ?>">
+									<div class="invalid-feedback">
+										<?= $user->password_error; ?>
+									</div>
+								</div>
+								<div class="form-group">
+									<input type="password" class="form-control <?=($user->password_repeat_error) ? "is-invalid" : "" ?>" placeholder="Password repeat"
+										name="password_repeat" value="<?= $user->password_repeat; ?>">
+									<div class="invalid-feedback">
+										<?= $user->password_repeat_error ?>
 									</div>
 								</div>
 
@@ -78,16 +84,14 @@
 									<input type="submit" value="Регистрация" class="btn btn-primary py-3 px-5">
 								</div>
 							</form>
-
 						</div>
-
-
 					</div>
 				</div>
 			</section>
 		</div><!-- END COLORLIB-MAIN -->
 	</div><!-- END COLORLIB-PAGE -->
-	<?php include_once __DIR__ . '/includes/pre-loader.php';?>
-  <?php include_once __DIR__ . '/includes/script/script2.php';?>
+	<?php include_once __DIR__ . '/includes/pre-loader.php'; ?>
+	<?php include_once __DIR__ . '/includes/script/script2.php'; ?>
 </body>
+
 </html>
