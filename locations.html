@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Места</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+
+<div class="wrapper">
+
+    <aside class="sidebar">
+
+        <h4 class="text-center mb-4">
+            Admin
+        </h4>
+
+        <ul class="nav flex-column">
+
+            <li class="nav-item">
+                <a href="dashboard.html" class="nav-link">
+                    Дэшборд
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="orders.html" class="nav-link">
+                    Заказы
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="products.html" class="nav-link">
+                    Товары
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="locations.html" class="nav-link active">
+                    Карта
+                </a>
+            </li>
+
+            <li class="nav-item mt-3">
+                <button
+                    id="themeToggle"
+                    class="btn btn-outline-light w-100">
+                    🌙 Тема
+                </button>
+            </li>
+
+            <li class="nav-item mt-3">
+                <a
+                    href="login.html"
+                    class="btn btn-danger w-100">
+                    Выйти
+                </a>
+            </li>
+
+        </ul>
+
+    </aside>
+
+    <main class="content">
+
+        <div class="container-fluid">
+
+            <h2 class="mb-4">
+                Информация о местах
+            </h2>
+
+            <div class="card p-4 mb-4">
+
+                <h4 class="mb-3">
+                    Добавить место
+                </h4>
+
+                <div class="row g-3">
+
+                    <div class="col-md-6">
+
+                        <input
+                            id="name"
+                            type="text"
+                            class="form-control"
+                            placeholder="Название места">
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <input
+                            id="address"
+                            type="text"
+                            class="form-control"
+                            placeholder="Адрес">
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <input
+                            id="lat"
+                            type="text"
+                            class="form-control"
+                            placeholder="Широта">
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <input
+                            id="lng"
+                            type="text"
+                            class="form-control"
+                            placeholder="Долгота">
+
+                    </div>
+
+                    <div class="col-12">
+
+                        <textarea
+                            id="description"
+                            class="form-control"
+                            rows="3"
+                            placeholder="Описание">
+                        </textarea>
+
+                    </div>
+
+                    <div class="col-12">
+
+                        <input
+                            id="image"
+                            type="file"
+                            class="form-control"
+                            accept="image/*">
+
+                    </div>
+
+                    <div class="col-12">
+
+                        <button
+                            id="addLocationBtn"
+                            class="btn btn-success">
+
+                            Добавить место
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div
+                class="row g-4"
+                id="locationsContainer">
+
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+<script src="js/theme.js"></script>
+
+<script>
+
+const defaultLocations = [
+
+    {
+        name: "Главный магазин",
+        address: "г. Москва, ул. Центральная, 1",
+        lat: "55.7558",
+        lng: "37.6173",
+        image: "https://placehold.co/600x400"
+    },
+
+    {
+        name: "Склад №1",
+        address: "г. Санкт-Петербург, ул. Складская, 10",
+        lat: "59.9343",
+        lng: "30.3351",
+        image: "https://placehold.co/600x400"
+    }
+
+];
+
+const container =
+document.getElementById('locationsContainer');
+
+function renderLocations(){
+
+    const saved =
+    JSON.parse(localStorage.getItem('locations')) || [];
+
+    const locations =
+    [...defaultLocations, ...saved];
+
+    container.innerHTML = '';
+
+    locations.forEach((location,index)=>{
+
+        container.innerHTML += `
+
+        <div class="col-lg-4 col-md-6">
+
+            <div class="card h-100">
+
+                <img
+                    src="${location.image}"
+                    class="card-img-top"
+                    alt="location">
+
+                <div class="card-body">
+
+                    <h5>
+                        ${location.name}
+                    </h5>
+
+                    <p>
+                        ${location.address}
+                    </p>
+
+                    <p>
+                        ${location.lat},
+                        ${location.lng}
+                    </p>
+
+                    ${
+                        index >= 2
+                        ?
+                        `<button
+                            class="btn btn-danger"
+                            onclick="deleteLocation(${index-2})">
+                            Удалить
+                        </button>`
+                        :
+                        ''
+                    }
+
+                </div>
+
+            </div>
+
+        </div>
+
+        `;
+
+    });
+
+}
+
+function deleteLocation(index){
+
+    const locations =
+    JSON.parse(localStorage.getItem('locations')) || [];
+
+    locations.splice(index,1);
+
+    localStorage.setItem(
+        'locations',
+        JSON.stringify(locations)
+    );
+
+    renderLocations();
+
+}
+
+document
+.getElementById('addLocationBtn')
+.addEventListener('click',()=>{
+
+    const file =
+    document.getElementById('image').files[0];
+
+    if(!file){
+
+        alert('Выберите фото');
+
+        return;
+    }
+
+    const reader =
+    new FileReader();
+
+    reader.onload = function(){
+
+        const location = {
+
+            name:
+            document.getElementById('name').value,
+
+            address:
+            document.getElementById('address').value,
+
+            lat:
+            document.getElementById('lat').value,
+
+            lng:
+            document.getElementById('lng').value,
+
+            description:
+            document.getElementById('description').value,
+
+            image:
+            reader.result
+
+        };
+
+        const locations =
+        JSON.parse(
+            localStorage.getItem('locations')
+        ) || [];
+
+        locations.push(location);
+
+        localStorage.setItem(
+            'locations',
+            JSON.stringify(locations)
+        );
+
+        renderLocations();
+
+        document.getElementById('name').value = '';
+        document.getElementById('address').value = '';
+        document.getElementById('lat').value = '';
+        document.getElementById('lng').value = '';
+        document.getElementById('description').value = '';
+        document.getElementById('image').value = '';
+
+    };
+
+    reader.readAsDataURL(file);
+
+});
+
+renderLocations();
+
+</script>
+
+</body>
+</html>
